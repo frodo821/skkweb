@@ -1,0 +1,14 @@
+.editor {
+  min-width: 10rem;
+  max-width: 80rem;
+  margin: auto;
+  padding: 0.5rem;
+  min-height: 30rem;
+  border: solid 2px;
+  border-radius: 3px;
+  white-space: pre;
+}
+
+span.input-buffer {
+  background-color: rgba(0, 110, 255, 0.212);
+}
