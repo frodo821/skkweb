@@ -140,6 +140,9 @@ window.addEventListener('DOMContentLoaded', () => {
           e.preventDefault();
           if (!converter.empty) {
             converter.confirm();
+            moveBufferToEditor();
+            getSelection().setPosition(buffer, 1);
+            return;
           }
           buffer.textContent += '\n';
           moveBufferToEditor();

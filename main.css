@@ -6,9 +6,12 @@
   min-height: 30rem;
   border: solid 2px;
   border-radius: 3px;
-  white-space: pre;
+  white-space: break-spaces;
 }
 
 span.input-buffer {
   background-color: rgba(0, 110, 255, 0.212);
+}
+span.input-buffer:not(:empty)::after {
+  content: '*';
 }
