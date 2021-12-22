@@ -1,4 +1,5 @@
 window.addEventListener('DOMContentLoaded', () => {
+  const params = Object.fromEntries(location.search.substring(1).split('&').map(it => it.split('=')));
   const converter = new Converter();
 
   /**
@@ -6,6 +7,7 @@ window.addEventListener('DOMContentLoaded', () => {
    */
   const canvas = document.getElementById('overlay');
   const animator = new CanvasAnimator(canvas);
+  animator.setEnable(params['gaming'] !== 'disable');
 
   /**
    @type {HTMLDivElement}
