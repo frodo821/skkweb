@@ -63,7 +63,26 @@ window.addEventListener('DOMContentLoaded', () => {
 
     sib.textContent += buffer.textContent;
     buffer.textContent = '';
-  }
+  };
+
+  let onCursorMove = function () {
+    converter.confirm();
+    moveBufferToEditor();
+    if (buffer) {
+      setTimeout(() => {
+        buffer.remove();
+        buffer = document.createElement('span');
+        buffer.className = 'input-buffer';
+        let sel = getSelection();
+
+        if (sel && sel.rangeCount > 0) {
+          let ran = sel.getRangeAt(0);
+          ran.insertNode(buffer);
+          ran.collapse(false);
+        }
+      }, 0);
+    }
+  };
 
   editor.addEventListener('blur', onBlur);
   editor.addEventListener('mousedown', function (e) { onBlur(e); onFocus(e); });
@@ -71,6 +90,7 @@ window.addEventListener('DOMContentLoaded', () => {
     if (!buffer || !buffer.parentNode) {
       return;
     }
+    console.log(e.key);
 
     switch (true) {
       case true:
@@ -96,6 +116,11 @@ window.addEventListener('DOMContentLoaded', () => {
           }
 
           converter.removeLast();
+          break;
+        }
+
+        if (e.key.startsWith('Arrow') || e.key === 'Home' || e.key === 'End') {
+          onCursorMove();
           break;
         }
 
