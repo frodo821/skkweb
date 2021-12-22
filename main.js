@@ -1,15 +1,23 @@
 window.addEventListener('DOMContentLoaded', () => {
-  let converter = new Converter();
+  const converter = new Converter();
+
+  /**
+   * @type {HTMLCanvasElement}
+   */
+  const canvas = document.getElementById('overlay');
+  const animator = new CanvasAnimator(canvas);
 
   /**
    @type {HTMLDivElement}
    */
-  let editor = document.querySelector('div.editor');
+  const editor = document.querySelector('div.editor');
 
   /**
    * @type {HTMLSpanElement | null}
    */
   let buffer;
+
+  window.addEventListener('resize', animator.onWindowResized);
 
   let onFocus = function () {
     buffer = document.createElement('span');
@@ -40,6 +48,19 @@ window.addEventListener('DOMContentLoaded', () => {
       range.setStart(buffer, 0);
       range.collapse(false);
     }, 0);
+  };
+
+  let createRenderable = (text) => {
+    let size = Math.floor(Math.random() * 40) + 20;
+    console.log(size);
+    return new TextRenderer(
+      animator,
+      text,
+      animator.centerCenter[0] + (getRandom() * 200),
+      animator.centerCenter[1] + (getRandom() * 200),
+      `hsl(${Math.random() * 360}deg 100% 50%)`,
+      `${size}px serif`,
+      [getRandom() * 200, getRandom() * 400]);
   };
 
   let onBlur = function () {
@@ -90,7 +111,6 @@ window.addEventListener('DOMContentLoaded', () => {
     if (!buffer || !buffer.parentNode) {
       return;
     }
-    console.log(e.key);
 
     switch (true) {
       case true:
@@ -128,6 +148,7 @@ window.addEventListener('DOMContentLoaded', () => {
           e.preventDefault();
           if (!converter.empty) {
             converter.convert();
+            createRenderable(converter.buffer);
             break;
           } else {
             buffer.textContent = ' ';
@@ -166,8 +187,13 @@ window.addEventListener('DOMContentLoaded', () => {
         }
 
         let key = e.shiftKey ? e.key.toUpperCase() : e.key;
+        createRenderable(key);
         converter.append(key);
     }
     buffer.textContent = converter.buffer;
   });
 });
+
+function getRandom() {
+  return 2 * Math.random() - 1;
+}
