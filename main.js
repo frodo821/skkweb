@@ -33,7 +33,6 @@ window.addEventListener('DOMContentLoaded', () => {
         (range.commonAncestorContainer.nodeType === Node.ELEMENT_NODE &&
           range.commonAncestorContainer.className !== 'editor')
       ) {
-        console.log(range.commonAncestorContainer);
         return;
       }
 
@@ -126,8 +125,6 @@ window.addEventListener('DOMContentLoaded', () => {
         if (e.shiftKey && !converter.empty) {
           converter.convert();
         }
-
-        console.log(converter.buffer, converter.converting);
 
         if (converter.converting) {
           buffer.textContent = converter.buffer;

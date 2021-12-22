@@ -63,7 +63,6 @@ class Dictionary {
     for (let i = 0; i < kana.length; i++) {
       katakana += KANA_TO_KATAKANA[kana[i]] || kana[i];
     }
-    console.log(katakana);
     return katakana;
   }
 }
