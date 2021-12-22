@@ -180,6 +180,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
         if (e.shiftKey && !converter.empty) {
           converter.convert();
+          createRenderable(converter.buffer);
         }
 
         if (converter.converting) {
