@@ -2,19 +2,19 @@ class CanvasAnimator {
   /**
    * @type {boolean}
    */
-  #enabled;
+  enabled;
   /**
    * @type {[number, number]}
    */
-  #size;
+  size;
   /**
    * @type {number?}
   */
-  #callbackId;
+  callbackId;
   /**
    * @type {number}
   */
-  #prevFrameTime;
+  prevFrameTime;
 
   /**
    * @param {HTMLCanvasElement} canvas 
@@ -28,12 +28,12 @@ class CanvasAnimator {
      * @type {CanvasRenderingContext2D}
      */
     this.context = canvas.getContext('2d');
-    this.#size = [0, 0];
+    this.size = [0, 0];
 
     this.onWindowResized();
-    this.#enabled = true;
-    this.#callbackId = requestAnimationFrame(this.#tick);
-    this.#prevFrameTime = -1;
+    this.enabled = true;
+    this.callbackId = requestAnimationFrame(this.tick);
+    this.prevFrameTime = -1;
     /**
      * @type {Renderable[]}
      */
@@ -41,46 +41,46 @@ class CanvasAnimator {
   }
 
   get isEnabled() {
-    return this.#enabled;
+    return this.enabled;
   }
 
   get centerTop() {
-    return [this.#size[0] / 2, 0];
+    return [this.size[0] / 2, 0];
   }
 
   get centerCenter() {
-    return [this.#size[0] / 2, this.#size[1] / 2];
+    return [this.size[0] / 2, this.size[1] / 2];
   }
 
   setEnable(state) {
-    this.#enabled = state;
+    this.enabled = state;
   }
 
   onWindowResized = () => {
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
-    this.#size = [window.innerWidth, window.innerHeight];
-    this.context.clearRect(0, 0, this.#size[0], this.#size[1]);
+    this.size = [window.innerWidth, window.innerHeight];
+    this.context.clearRect(0, 0, this.size[0], this.size[1]);
   }
 
-  #tick = () => {
+  tick = () => {
     if (!this.isEnabled) {
       return;
     }
 
-    let delta = this.#prevFrameTime === -1 ? 0 : (performance.now() - this.#prevFrameTime) / 1000;
+    let delta = this.prevFrameTime === -1 ? 0 : (performance.now() - this.prevFrameTime) / 1000;
     this.render(delta);
-    this.#prevFrameTime = performance.now();
-    this.#callbackId = requestAnimationFrame(this.#tick);
+    this.prevFrameTime = performance.now();
+    this.callbackId = requestAnimationFrame(this.tick);
   }
 
   dispose() {
-    cancelAnimationFrame(this.#callbackId);
+    cancelAnimationFrame(this.callbackId);
     this.renderables.length = 0;
   }
 
   render(delta) {
-    this.context.clearRect(0, 0, this.#size[0], this.#size[1]);
+    this.context.clearRect(0, 0, this.size[0], this.size[1]);
     this.renderables.forEach(it => it.render(this.context, delta));
   }
 
@@ -92,7 +92,7 @@ class CanvasAnimator {
    * @returns {boolean}
    */
   isInsideCanvas(x, y, w, h) {
-    return x + w >= 0 && y + h >= 0 && x <= this.#size[0] && y <= this.#size[1];
+    return x + w >= 0 && y + h >= 0 && x <= this.size[0] && y <= this.size[1];
   }
 }
 
