@@ -2,19 +2,19 @@ class CanvasAnimator {
   /**
    * @type {boolean}
    */
-  #enabled
+  #enabled;
   /**
    * @type {[number, number]}
    */
-  #size
+  #size;
   /**
    * @type {number?}
   */
-  #callbackId
+  #callbackId;
   /**
    * @type {number}
   */
-  #prevFrameTime
+  #prevFrameTime;
 
   /**
    * @param {HTMLCanvasElement} canvas 
@@ -121,15 +121,15 @@ class TextRenderer extends Renderable {
   /**
    * @type {[number, number]}
    */
-  pos
+  pos;
   /**
    * @type {[number, number]}
    */
-  vel
+  vel;
   /**
    * @type {[number, number]}
    */
-  acc
+  acc;
 
   /**
    * @param {CanvasAnimator} animator 
