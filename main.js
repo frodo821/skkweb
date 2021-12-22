@@ -47,6 +47,7 @@ window.addEventListener('DOMContentLoaded', () => {
       let txt = editor.textContent;
       buffer.innerHTML = '';
       editor.textContent = txt;
+      converter.clear();
       buffer.remove();
     }
   };
@@ -67,7 +68,6 @@ window.addEventListener('DOMContentLoaded', () => {
   editor.addEventListener('blur', onBlur);
   editor.addEventListener('mousedown', function (e) { onBlur(e); onFocus(e); });
   editor.addEventListener('keydown', function (e) {
-    e.preventDefault();
     if (!buffer || !buffer.parentNode) {
       return;
     }
@@ -79,6 +79,7 @@ window.addEventListener('DOMContentLoaded', () => {
         }
 
         if (e.key === 'Backspace') {
+          e.preventDefault();
           if (buffer.textContent.length === 0) {
             let sib = buffer.previousSibling;
 
@@ -99,6 +100,7 @@ window.addEventListener('DOMContentLoaded', () => {
         }
 
         if (e.key === ' ') {
+          e.preventDefault();
           if (!converter.empty) {
             converter.convert();
             break;
@@ -110,6 +112,7 @@ window.addEventListener('DOMContentLoaded', () => {
         }
 
         if (e.key === 'Enter') {
+          e.preventDefault();
           if (!converter.empty) {
             converter.confirm();
           }
@@ -121,6 +124,8 @@ window.addEventListener('DOMContentLoaded', () => {
         if (e.key.length !== 1) {
           break;
         }
+
+        e.preventDefault();
 
         if (e.shiftKey && !converter.empty) {
           converter.convert();
